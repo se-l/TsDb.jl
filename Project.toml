@@ -1,0 +1,4 @@
+name = "TsDb"
+uuid = "e676829e-8cda-497c-a145-486e28178de6"
+authors = ["seb <se-l@gmx.de>"]
+version = "0.1.0"
