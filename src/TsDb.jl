@@ -1,5 +1,12 @@
 module TsDb
 
-greet() = print("Hello World!")
+using YAML
 
-end # module
+export Client
+
+const path_tsdb = YAML.load_file(".\\src\\config.yaml")["path_tsdb"]
+include("client.jl")
+
+# precompile()
+
+end  # module TsDb

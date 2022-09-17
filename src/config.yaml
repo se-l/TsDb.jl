@@ -1,0 +1,2 @@
+# Change this to an absolute path and create a registry.json with {} inside.
+path_tsdb: ..\tsdb_data

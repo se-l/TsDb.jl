@@ -2,3 +2,13 @@ name = "TsDb"
 uuid = "e676829e-8cda-497c-a145-486e28178de6"
 authors = ["seb <se-l@gmx.de>"]
 version = "0.1.0"
+
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+Nettle = "49dea1ee-f6fa-5aa6-9a11-8816cee7d4b9"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
