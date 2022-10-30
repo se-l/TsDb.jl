@@ -1,9 +1,5 @@
-import os
 import pandas as pd
 from julia import Main as Jl
-from pathlib import Path
-
-fp = Path(__file__).resolve().parents[0]
 
 Jl.eval(f'''import TsDb: Client''')
 

@@ -1,11 +1,15 @@
 module TsDb
 
-using YAML
+import YAML: load_file
 
-export Client
+export Client, Server
 
-const path_tsdb = YAML.load_file(".\\src\\config.yaml")["path_tsdb"]
+cfg = load_file(joinpath(@__FILE__, "..", "config.yaml"))
+const path_tsdb = cfg["path_tsdb"]
+const path_ui = cfg["path_ui"]
+
 include("client.jl")
+include("server.jl")
 
 # precompile()
 

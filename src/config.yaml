@@ -1,2 +1,4 @@
-# Change this to an absolute path and create a registry.json with {} inside.
-path_tsdb: ..\tsdb_data
+# Change this to an absolute path and create a registry.json with {} inside
+# path_tsdb: ..\tsdb_data
+path_tsdb: C:\repos\trade\data\ts2hdf5
+path_ui: C:\repos\trade\data\tsdb_ui

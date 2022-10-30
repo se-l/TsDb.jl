@@ -25,3 +25,8 @@ Manifest.toml
 
 .sandbox.jl
 .github
+.config.yaml
+
+# Custom project files
+.run_server.bat
+.sandbox.jl

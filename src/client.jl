@@ -28,21 +28,7 @@ function query(meta::AbstractDict; start="", stop="9")::DataFrame
     # Get all matching metas
     dfs = []
     for meta_reg in matching_metas(meta)
-        dir = dir_path(meta_reg)
-        if !ispath(dir)
-            println("$(dir) not found. Dropping meta...")
-            drop(meta_reg)
-            continue
-        else
-            mats = []
-            for fn in readdir(dir)
-                date = replace(fn, ".jld2" => "")
-                if start <= date <= stop
-                    push!(mats, load(joinpath(dir, fn), "data"))
-                end
-            end
-            push!(dfs, DataFrame(vcat(mats...), ["ts", col_name(meta_reg)]))
-        end
+        push!(dfs, fetch_df(dir_name(meta_reg), start=start, stop=stop))
     end
 
     if  length(dfs) === 0
@@ -52,6 +38,30 @@ function query(meta::AbstractDict; start="", stop="9")::DataFrame
     else
         return sort(outerjoin(dfs..., on="ts"), :ts)
     end
+end
+
+function query(key::String; start="", stop="9")::DataFrame
+    # 1 dir_name, therefore definitnely returning 1 df only
+    return fetch_df(key, start=start, stop=stop)
+end
+
+function fetch_df(key::String; start="", stop="9")::DataFrame
+    dir = joinpath(path_tsdb, key)
+    df = DataFrame()
+    if !ispath(dir)
+        println("$(dir) not found. Dropping meta...")
+        drop(key)
+    else
+        mats = []
+        for fn in readdir(dir)
+            date = replace(fn, ".jld2" => "")
+            if start <= date <= stop
+                push!(mats, load(joinpath(dir, fn), "data"))
+            end
+        end
+        df = DataFrame(vcat(mats...), ["ts", col_name(key2meta(key))])
+    end
+    return df
 end
 
 function col_name(meta::AbstractDict; 
@@ -85,6 +95,11 @@ function matching_metas(meta::AbstractDict)
         end
     end
     return matching
+end
+
+function key2meta(key::String)
+    map = registry()
+    return map[Symbol(key)]
 end
 
 function upsert(meta::AbstractDict, m_incoming; assume_sorted=true)
@@ -198,9 +213,20 @@ end
  
 function py_query(meta; start="", stop="9")
     df = query(meta, start=string(start), stop=string(stop))
+    # df = query(key, start=string(start), stop=string(stop))
     mat = Matrix(df)
-    mat = ifelse.(mat.===missing, np.nan, mat)
+    mat = ifelse.(mat.===missing, nothing, mat)
     return (names(df), mat)
 end
 
-end
+end # Module
+
+# query(Dict(
+#         "measurement_name" => "trade bars",
+#         "exchange" => "bitfinex",
+#         "asset" => "ethusd",
+#         "information" => "volume"
+# ),
+#     start="2022-02-07",
+#     stop ="2022-02-13"
+#     )
