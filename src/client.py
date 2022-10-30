@@ -1,7 +1,7 @@
 import pandas as pd
 from julia import Main as Jl
 
-Jl.eval(f'''import TsDb: Client''')
+Jl.eval(f'''import TsDb: TsDb, Client''')
 
 
 def upsert(meta: dict, data):

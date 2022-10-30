@@ -30,3 +30,4 @@ Manifest.toml
 # Custom project files
 .run_server.bat
 .sandbox.jl
+src/__pycache__/
